@@ -1,0 +1,34 @@
+name: Deploy react-query-example
+
+on: [push]
+
+env:
+  NODE_AUTH_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set commit hash to env
+        run: echo "CP_BUILD_HASH=$(echo $GITHUB_SHA | cut -c 1-7)" >> $GITHUB_ENV
+
+      - name: Set build time to env
+        run: echo "CP_BUILD_TIMESTAMP=$(echo $(date -u +"%Y-%m-%dT%H:%M:%SZ"))" >> $GITHUB_ENV
+
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@chargepoint'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      # Deploy

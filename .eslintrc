@@ -1,0 +1,6 @@
+{
+    "extends": ["@chargepoint/eslint-config-next"],
+    "rules": {
+        "import/no-extraneous-dependencies": ["off"]
+    }
+}

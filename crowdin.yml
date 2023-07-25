@@ -1,0 +1,4 @@
+base_path: .
+files:
+  - source: /public/translations/messages.json
+    translation: /public/translations/%two_letters_code%.json
